@@ -1,0 +1,52 @@
+version: "3"
+services:
+  hub:
+    image: selenium/hub:4.20
+#    ports:
+#    - "4444:4444"
+#    - "4442:4442"
+#    - "4443:4443"
+  chrome:
+    image: selenium/node-chrome:4.20
+    shm_size: '2g'
+    depends_on:
+    - hub
+    environment:
+    - SE_EVENT_BUS_HOST=hub
+    - SE_EVENT_BUS_PUBLISH_PORT=4442
+    - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    - SE_NODE_MAX_SESSIONS=4
+
+  firefox:
+    image: selenium/node-firefox:4.20
+    shm_size: '2g'
+    depends_on:
+    - hub
+    environment:
+    - SE_EVENT_BUS_HOST=hub
+    - SE_EVENT_BUS_PUBLISH_PORT=4442
+    - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    - SE_NODE_MAX_SESSIONS=4
+  vendor-portal:
+    image: thakurkumarrahul/selenium
+    depends_on:
+    - chrome
+    environment:
+    - BROWSER=chrome
+    - TEST_SUITE=vendor-portal.xml
+    - HUB_HOST=hub
+    - THREAD_COUNT=3
+    volumes:
+    - ./output/vendor-portal:/home/selenium/test-output
+
+  flight-reservation:
+    image: thakurkumarrahul/selenium
+    depends_on:
+    - firefox
+    environment:
+    - BROWSER=firefox
+    - TEST_SUITE=flight-reservation.xml
+    - HUB_HOST=hub
+    - THREAD_COUNT=3
+    volumes:
+     - C:/Users/Lenovo/udemy-docker/03-automation-framework/Jenkins-Ci-Cd/16-runner-approach-1/output/flight-reservation:/home/selenium/test-output
