@@ -2,7 +2,7 @@ pipeline{
 
     agent {
 
-        label 'echo'
+        label 'docker'
 
     }
 
