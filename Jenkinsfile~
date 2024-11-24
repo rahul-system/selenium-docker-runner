@@ -1,0 +1,29 @@
+pipeline{
+
+    agent any
+
+    stages{
+
+        stage('start grid'){
+
+            steps{
+                bat "docker-compose -f grid.yaml up -d"
+
+            }
+
+        }
+
+        stage('Bring Grid down'){
+
+             steps{
+                bat "docker-compose down"
+
+
+            }
+
+        }
+
+
+            }
+
+}
