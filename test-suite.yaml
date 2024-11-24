@@ -3,7 +3,7 @@ services:
   vendor-portal:
     image: thakurkumarrahul/selenium
     environment:
-      - BROWSER=chrome
+      - BROWSER
       - TEST_SUITE=vendor-portal.xml
       - HUB_HOST=hub
       - THREAD_COUNT=3
@@ -13,9 +13,9 @@ services:
   flight-reservation:
     image: thakurkumarrahul/selenium
     environment:
-      - BROWSER=firefox
+      - BROWSER
       - TEST_SUITE=flight-reservation.xml
       - HUB_HOST=hub
-      - THREAD_COUNT=3
+      - THREAD_COUNT=4
     volumes:
       - ./output/flight-reservation:/home/selenium/test-output
